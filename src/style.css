@@ -2,11 +2,12 @@
 body {
   background-color: green;
 }
-.card {
-  width: 170px;
+.card1 {
+  width: 150px;
   margin: 40px auto;
-  height: 230px;
+  height: 200px;
   background-color: white;
+  border-radius: 10px;
 }
 .number {
   text-align: center;
@@ -14,28 +15,24 @@ body {
 }
 .suit {
   float: inline-start;
-  margin: 20px;
+  margin: 30px;
 }
 .rotate {
   transform: rotate(180deg);
 }
 .spade {
-  border-radius: 10px;
   color: black;
   font-size: 30px;
 }
 .clover {
-  border-radius: 10px;
   color: black;
   font-size: 30px;
 }
 .heart {
-  border-radius: 10px;
   color: red;
   font-size: 30px;
 }
 .diamond {
-  border-radius: 10px;
   color: red;
   font-size: 30px;
 }

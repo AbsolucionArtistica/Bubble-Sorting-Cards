@@ -26,7 +26,7 @@ window.onload = function() {
   let randomSuit = suit[Math.floor(Math.random() * suit.length)]; //Elige una pinta al azar
   let randomNumber = number[Math.floor(Math.random() * number.length)]; //Elige un numero al alzar
 
-  const card = document.querySelector(".card");
+  const card1 = document.querySelector(".card1");
   const myDiv = document.createElement("div");
 
   if (randomSuit == "♥") {
@@ -51,7 +51,7 @@ window.onload = function() {
   Number.innerHTML = randomNumber; //aplica la pinta aleatorio al texto
   LowerSuit.innerHTML = randomSuit; //aplica el numero aleatorio al texto
 
-  card.appendChild(myDiv);
+  card1.appendChild(myDiv);
   myDiv.appendChild(UpperSuit);
   myDiv.appendChild(Number);
   myDiv.appendChild(LowerSuit);
