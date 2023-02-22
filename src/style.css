@@ -1,1 +1,44 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
+body {
+  background-color: green;
+}
+.card {
+  width: 170px;
+  margin: 40px auto;
+  height: 200px;
+}
+.number {
+  text-align: center;
+  margin: 30px;
+}
+.suit {
+  float: inline-start;
+  margin: 10px;
+}
+.rotate {
+  transform: rotate(180deg);
+}
+.spade {
+  background-color: white;
+  border-radius: 10px;
+  color: black;
+  font-size: 30px;
+}
+.clover {
+  background-color: white;
+  border-radius: 10px;
+  color: black;
+  font-size: 30px;
+}
+.heart {
+  background-color: white;
+  border-radius: 10px;
+  color: red;
+  font-size: 30px;
+}
+.diamond {
+  background-color: white;
+  border-radius: 10px;
+  color: red;
+  font-size: 30px;
+}
