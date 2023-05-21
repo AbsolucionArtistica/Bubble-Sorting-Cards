@@ -2,20 +2,24 @@
 body {
   background-color: green;
 }
+.originalCards {
+  height: 400x;
+}
 .card1 {
   width: 150px;
-  margin: 40px auto;
   height: 200px;
   background-color: white;
   border-radius: 10px;
+  position: relative;
+  margin: auto;
 }
 .number {
   text-align: center;
-  margin: 30px;
+  margin: 25px;
 }
 .suit {
   float: inline-start;
-  margin: 30px;
+  margin: 10px;
 }
 .rotate {
   transform: rotate(180deg);
