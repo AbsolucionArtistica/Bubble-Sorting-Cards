@@ -2,9 +2,6 @@
 import "bootstrap";
 import "./style.css";
 
-import "./assets/img/rigo-baby.jpg";
-import "./assets/img/4geeks.ico";
-
 let suit = ["♦", "♥", "♠", "♣"];
 let number = [
   "1",
@@ -22,68 +19,144 @@ let number = [
   "13"
 ];
 
+let generatedCards = [];
+let changeLog = [];
+
 function CardGenerator() {
-  //write your code here
+  let randomSuit = suit[Math.floor(Math.random() * suit.length)];
+  let randomNumber = number[Math.floor(Math.random() * number.length)];
 
-  let randomSuit = suit[Math.floor(Math.random() * suit.length)]; //Elige una pinta al azar
-  let randomNumber = number[Math.floor(Math.random() * number.length)]; //Elige un numero al alzar
+  const cardContainer = document.querySelector(".originalCards");
+  const card = document.createElement("div");
+  card.classList.add("card", "card1"); // Add the "card1" class
 
-  const originalCards = document.querySelector(".originalCards");
-  const card1 = document.createElement("div");
-  card1.classList.add("card1");
-  const myDiv = document.createElement("div");
+  const cardContent = document.createElement("div");
+  cardContent.classList.add("card-content");
+
+  const upperSuit = document.createElement("p");
+  const numberText = document.createElement("p");
+  const lowerSuit = document.createElement("p");
+
+  upperSuit.classList.add("suit");
+  numberText.classList.add("number");
+  lowerSuit.classList.add("suit", "rotate");
 
   if (randomSuit == "♥") {
-    //Aplica la clase para la pinta de carta que salio
-    myDiv.classList.add("heart");
+    cardContent.classList.add("heart");
   } else if (randomSuit == "♦") {
-    myDiv.classList.add("diamond");
+    cardContent.classList.add("diamond");
   } else if (randomSuit == "♠") {
-    myDiv.classList.add("spade");
+    cardContent.classList.add("spade");
   } else {
-    myDiv.classList.add("clover");
+    cardContent.classList.add("clover");
   }
-  const UpperSuit = document.createElement("p"); //Crea el texto superior con el numero aleatorio
-  const Number = document.createElement("p"); //Crea un texto con la pinta que salio al azar
-  const LowerSuit = document.createElement("p"); //Crea el texto inferior con el numero aleatorio
-
-  UpperSuit.classList.add("suit"); //Aplica la clase para el numero de carta que salio
-  Number.classList.add("number"); //Aplica la clase para la pinta de carta que salio
-  LowerSuit.classList.add("suit", "rotate"); //Aplica la clase para el numero de carta que salio
 
   if (randomNumber == "1") {
-    //aplica la pinta aleatorio al texto
-    Number.innerHTML = "A";
+    numberText.innerHTML = "A";
   } else if (randomNumber == "11") {
-    Number.innerHTML = "J";
+    numberText.innerHTML = "J";
   } else if (randomNumber == "12") {
-    Number.innerHTML = "Q";
+    numberText.innerHTML = "Q";
   } else if (randomNumber == "13") {
-    Number.innerHTML = "K";
-  } else Number.innerHTML = randomNumber;
+    numberText.innerHTML = "K";
+  } else {
+    numberText.innerHTML = randomNumber;
+  }
 
-  UpperSuit.innerHTML = randomSuit; //aplica el numero aleatorio al texto
-  LowerSuit.innerHTML = randomSuit; //aplica el numero aleatorio al texto
+  upperSuit.innerHTML = randomSuit;
+  lowerSuit.innerHTML = randomSuit;
 
-  originalCards.appendChild(card1);
-  card1.appendChild(myDiv);
-  myDiv.appendChild(UpperSuit);
-  myDiv.appendChild(Number);
-  myDiv.appendChild(LowerSuit);
-  console.log(randomSuit);
+  cardContent.appendChild(upperSuit);
+  cardContent.appendChild(numberText);
+  cardContent.appendChild(lowerSuit);
+  card.appendChild(cardContent);
+  cardContainer.appendChild(card);
 
-  return myDiv;
+  return card;
 }
 
 const numberOfCards = document.getElementById("numberInput");
 const drawButton = document.getElementById("drawButton");
-let generatedCards = [];
+const sortButton = document.getElementById("sortButton");
+const changeLogElement = document.getElementById("container");
 
 drawButton.addEventListener("click", function() {
-  const cantidad = parseInt(numberOfCards.value);
+  const cardContainer = document.querySelector(".originalCards");
+  cardContainer.innerHTML = ""; // Clear the old cards
 
-  for (let i = 0; i < cantidad; i++) {
+  generatedCards = [];
+  changeLog = [];
+
+  const quantity = parseInt(numberOfCards.value);
+
+  for (let i = 0; i < quantity; i++) {
     let card = CardGenerator();
     generatedCards.push(card);
   }
+
+  changeLogElement.innerHTML = ""; // Clear the change log when drawing new cards
 });
+
+sortButton.addEventListener("click", function() {
+  const sortedCards = bubbleSort(generatedCards);
+  changeLog = [];
+
+  for (let i = 0; i < sortedCards.length; i++) {
+    let step = sortedCards[i].outerHTML;
+    changeLog.push(step);
+  }
+
+  displayChangeLog();
+});
+
+function bubbleSort(arr) {
+  let len = arr.length;
+  let swapped;
+
+  do {
+    swapped = false;
+
+    for (let i = 0; i < len - 1; i++) {
+      const currentValue = getValue(arr[i]);
+      const nextValue = getValue(arr[i + 1]);
+
+      if (currentValue > nextValue) {
+        [arr[i], arr[i + 1]] = [arr[i + 1], arr[i]];
+        swapped = true;
+
+        // Capture the intermediate step
+        const step = arr.map(card => card.outerHTML);
+        changeLog.push(step);
+      }
+    }
+  } while (swapped);
+
+  return arr;
+}
+
+function getValue(card) {
+  const numberElement = card.querySelector(".number");
+  const value = numberElement.innerHTML;
+
+  if (value === "A") {
+    return 1;
+  } else if (value === "J") {
+    return 11;
+  } else if (value === "Q") {
+    return 12;
+  } else if (value === "K") {
+    return 13;
+  } else {
+    return parseInt(value);
+  }
+}
+
+function displayChangeLog() {
+  changeLogElement.innerHTML = "";
+
+  for (let i = 0; i < changeLog.length; i++) {
+    const cardEntry = document.createElement("div");
+    cardEntry.innerHTML = changeLog[i];
+    changeLogElement.appendChild(cardEntry);
+  }
+}
